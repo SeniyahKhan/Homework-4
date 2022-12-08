@@ -1,3 +1,6 @@
+#Seniyah Khan
+#1973047
+
 def selection_sort_descend_trace(numbers):
     for i in range(len(numbers) - 1):
         t = i
