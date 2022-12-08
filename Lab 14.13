@@ -1,0 +1,48 @@
+#Seniyah Khan
+#1973047
+
+num_calls = 0
+
+def median(a, b, c):
+    if a < b < c or c < b < a:
+        return b
+    if a < c < b or b < c < a:
+        return c
+    else:
+        return a
+
+def partition(user_ids, leftend, rightend):
+    left = user_ids[leftend]
+    right = user_ids[rightend-1]
+    length = rightend - leftend
+    if length % 2 == 0:
+        middle = user_ids[leftend + length//2 - 1]
+    else:
+        middle = user_ids[leftend + length//2]
+
+    pivot = median(left, right, middle)
+    pivotindex = user_ids.index(pivot)
+    user_ids[pivotindex] = user_ids[leftend]
+    user_ids[leftend] = pivot
+    i = leftend + 1
+    for j in range(leftend + 1, rightend):
+        if user_ids[j] < pivot:
+            temp = user_ids[j]
+            user_ids[j] = user_ids[i]
+            user_ids[i] = temp
+            i += 1
+
+    leftendval = user_ids[leftend]
+    user_ids[leftend] = user_ids[i-1]
+
+    user_ids[i-1] = leftendval
+    return i - 1
+
+def quicksort(user_ids, leftindex, rightindex):
+    global num_calls
+    num_calls += 1
+    if leftindex < rightindex:
+        newpivotindex = partition(user_ids, leftindex, rightindex)
+        quicksort(user_ids, leftindex, newpivotindex)
+        quicksort(user_ids, newpivotindex + 1, rightindex)
+
